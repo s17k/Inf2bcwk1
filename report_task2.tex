@@ -123,7 +123,7 @@ For example, for $H_1$ we need to make sure that the value of the neuron corresp
            1 \\
            x \\
            y
-         \end{bmatrix} \bullet \begin{bmatrix}
+         \end{bmatrix} \boldsymbol{\cdot} \begin{bmatrix}
            1.170 \\
            1.116 \\
            -1
@@ -131,7 +131,7 @@ For example, for $H_1$ we need to make sure that the value of the neuron corresp
            1 \\
            x \\
            y
-         \end{bmatrix}  \bullet \begin{bmatrix}
+         \end{bmatrix}  \boldsymbol{\cdot} \begin{bmatrix}
            1 \\
            0.954 \\
            -0.855
@@ -148,7 +148,7 @@ For $H_2, H_3, H_4$, we can proceed in an equivalent fashion.
            H_2 \\
            H_3 \\
            H_4 
-         \end{bmatrix} \bullet \begin{bmatrix}
+         \end{bmatrix} \boldsymbol{\cdot} \begin{bmatrix}
            -4/5 \\
            1/4\\
            1/4\\
@@ -157,6 +157,7 @@ For $H_2, H_3, H_4$, we can proceed in an equivalent fashion.
          \end{bmatrix} & < 0
 \end{align}
 \end{enumerate}
+\newpage
 
 \begin{figure}[!htb]
 \centering
@@ -166,8 +167,37 @@ For $H_2, H_3, H_4$, we can proceed in an equivalent fashion.
 \end{figure}
 
 \newpage
+\section*{2.10 - Different decision regions for step/standard logistic functions}
+\begin{figure}[!htb]
+\includegraphics[scale=0.8]{t2_regions_hNN_AB.pdf}
+\includegraphics[scale=0.8]{t2_regions_sNN_AB.pdf}
+\caption{Decision regions when using the step and the standard logistic function, respectively; graphs of regions of size 9x9.}
+\label{regions_comp}
 
-\subsection*{2.10 - Different decision regions for sigmoidal/step functions}
+\end{figure}
+
+\begin{figure}[!htb]
+\includegraphics[scale=0.8]{t2_regions_hNN_AB_veryclose.pdf}
+\includegraphics[scale=0.8]{t2_regions_sNN_AB_veryclose.pdf}
+\caption{Decision regions when using the step and the standard logistic function, respectively; graphs of regions of size 0.05x0.05.}
+\label{regions_comp_closeby}
+
+\end{figure}
+\newpage
+\noindent
+In order to approximate the decision regions as closely as posible, I have multiplied the weights used with the step function by a scalar (1000). Such a transformation does not make a difference when using the step function, but it makes a significant difference when using the standard logistic function. Figure \ref{sigmos} shows what effect this has on a standard logisitc function. \\\\In order to make it approximate the step function even closer, we could, in theory, make the scaling factor even bigger but this does not prove to be practical
+- it causes an overflow when using standard floating-point arithmetic.\\\\
+Figures \ref{regions_comp}, \ref{regions_comp_closeby} show that approximating the step function in this way works well, but it does not solve the problem entirely. However big the scaling factor is, there will always be misclassified points. By making it bigger, we restrict their number.
+
+\begin{figure}[!htb]
+\includegraphics[scale=0.6]{sigmo_first.png}
+\vspace{0cm}
+\hspace{-1cm}
+\includegraphics[scale=0.6]{sigmo_second.png}
+\caption{Comparison of standard logistic functions for differently scaled weights. The graph on the right has $x$ initially scaled by 1000.}
+\label{sigmos}
+\end{figure}
+
 
 
 \end{document}
