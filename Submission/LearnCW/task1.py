@@ -166,7 +166,7 @@ def calculatePMap(Y, Kfolds):
         class_num = Y.item(i,0) 
         
         # switch to next partition if no samples left
-        if current_class_left[class_num] == 0 and                 current_class_partition[class_num] != Kfolds:
+        if current_class_left[class_num] == 0 and current_class_partition[class_num] != Kfolds:
             
             current_class_partition[class_num] += 1
             current_class_left[class_num] = Mc(class_num)
@@ -271,14 +271,13 @@ def task1_mgc_cv(X, Y, CovKind, epsilon, Kfolds):
         for c in range(1, CLASSES_Q+1):
             mu, Eps = mu_hats[c-1], Eps_regs[c-1]
             
-            log_prior = numpy.log(class_counts[c]/len(training_samples))
             log_det = numpy.linalg.slogdet(Eps)[1]
             
             for i in test_samples:
                 x_r = X[i]-mu # row vector
                 x = x_r.reshape(-1, 1) # column vector
                 first_term = x_r @ numpy.linalg.inv(Eps) @ x
-                log_posterior = (-1/2) * first_term - (1/2) * log_det + log_prior
+                log_posterior = (-1/2) * first_term - (1/2) * log_det
                 class_log_posteriors[i].append((log_posterior, c))
 
         classifications = [max(sample_posteriors, default=([],[]))[1]
